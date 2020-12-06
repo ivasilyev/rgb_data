@@ -1,3 +1,5 @@
+from utils import Utils
+
 class ColormapCompilation:
     """
     Taken from: https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
@@ -3228,19 +3230,14 @@ class ColormapCompilation:
             out = self.convert_color_2d_array(out)
         return out
 
-    def dump(self):
-        import json
+    def export(self):
         data = [i for i in dir(self) if "data" in i and not callable(getattr(self.__class__, i))]
         out = dict()
         for attr in data:
             key = attr.replace("_data", "").strip("_")
             out[key] = self.get_color_data(key)
-        with open("colormaps.json", mode="w", encoding="utf-8") as f:
-            json.dump(out, f, sort_keys=True)
-            f.close()
-        with open("colormaps.txt", mode="w", encoding="utf-8") as f:
-            f.write("\n".join(sorted(list(out.keys()))) + "\n")
-            f.close()
+        #
+        Utils.export(out)
 
 
 def test():
@@ -3250,3 +3247,8 @@ def test():
     cc.get_color_data("plasma", convert=True)
     cc.get_color_data("gist_rainbow", convert=False)
     cc.get_color_data("gist_earth", convert=False)
+
+
+if __name__ == '__main__':
+    c = ColormapCompilation()
+    c.export()
