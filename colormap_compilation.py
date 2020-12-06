@@ -3237,7 +3237,7 @@ class ColormapCompilation:
             key = attr.replace("_data", "").strip("_")
             out[key] = self.get_color_data(key)
         #
-        Utils.export(out)
+        Utils.export(out, "color_maps")
 
 
 def test():

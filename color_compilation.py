@@ -30,7 +30,7 @@ class ColorCompilation:
 def test():
     # from color_compilation import ColorCompilation
     cc = ColorCompilation()
-    Utils.export(cc.colors)
+    Utils.export(cc.colors, "colors")
 
 
 if __name__ == '__main__':
