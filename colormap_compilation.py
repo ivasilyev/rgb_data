@@ -1,5 +1,6 @@
 from utils import Utils
 
+
 class ColormapCompilation:
     """
     Taken from: https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
@@ -3230,14 +3231,15 @@ class ColormapCompilation:
             out = self.convert_color_2d_array(out)
         return out
 
-    def export(self):
+    def __init__(self):
+        self.colormaps = dict()
+        self.compile()
+
+    def compile(self):
         data = [i for i in dir(self) if "data" in i and not callable(getattr(self.__class__, i))]
-        out = dict()
         for attr in data:
             key = attr.replace("_data", "").strip("_")
-            out[key] = self.get_color_data(key)
-        #
-        Utils.export(out, "color_maps")
+            self.colormaps[key] = self.get_color_data(key)
 
 
 def test():
@@ -3251,4 +3253,6 @@ def test():
 
 if __name__ == '__main__':
     c = ColormapCompilation()
-    c.export()
+    prefix = "color_maps"
+    Utils.export(c.colormaps, prefix)
+    Utils.generate_boilerplate(c.colormaps, prefix)

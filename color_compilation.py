@@ -1,5 +1,6 @@
 from utils import Utils
 
+
 class ColorCompilation:
     DOUBTFUL_COLORS = {"Lime": "Green", }
 
@@ -27,11 +28,7 @@ class ColorCompilation:
             self.colors.update(update)
 
 
-def test():
-    # from color_compilation import ColorCompilation
+if __name__ == '__main__':
     cc = ColorCompilation()
     Utils.export(cc.colors, "colors")
-
-
-if __name__ == '__main__':
-    test()
+    Utils.generate_boilerplate(cc.colors, "colors")
